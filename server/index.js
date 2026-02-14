@@ -14,10 +14,13 @@ let db;
 // Initialize Database
 (async () => {
     try {
+        // [MODIFIED] Use /tmp directory for database on Vercel
+        const dbPath = process.env.VERCEL ? '/tmp/storeminds.db' : './storeminds.db';
         db = await open({
-            filename: './storeminds.db',
+            filename: dbPath,
             driver: sqlite3.Database
         });
+        console.log(`Using database at: ${dbPath}`);
 
         console.log('Connected to SQLite database.');
 
